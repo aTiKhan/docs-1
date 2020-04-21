@@ -10,20 +10,21 @@ Dapr bindings allow you to:
 * Replace bindings without changing your code
 * Focus on business logic and not the event resource implementation
 
-For more info on bindings, read [this](../../concepts/bindings/README.md) link.<br>
+For more info on bindings, read [this](../../concepts/bindings/README.md) link.
+
 For a complete sample showing bindings, visit this [link](https://github.com/dapr/samples/tree/master/5.bindings).
 
 ## 1. Create a binding
 
 An input binding represents an event resource that Dapr uses to read events from and push to your application.
 
-For the purpose of this HowTo, we'll use a Kafka binding. You can find a list of the different binding specs [here](../../concepts/bindings/specs).
+For the purpose of this HowTo, we'll use a Kafka binding. You can find a list of the different binding specs [here](../../reference/specs/bindings/README.md).
 
 Create the following YAML file, named binding.yaml, and save this to the /components sub-folder in your application directory:
 
 *Note: When running in Kubernetes, apply this file to your cluster using `kubectl apply -f binding.yaml`*
 
-```
+```yml
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
@@ -39,7 +40,8 @@ spec:
     value: group1
 ```
 
-Here, you create a new binding component with the name of `myEvent`.<br>
+Here, you create a new binding component with the name of `myEvent`.
+
 Inside the `metadata` section, configure the Kafka related properties such as the topics to listen on, the brokers and more.
 
 ## 2. Listen for incoming events
@@ -48,7 +50,7 @@ Now configure your application to receive incoming events. If using HTTP, you ne
 
 *The following example shows how you would listen for the event in Node.js, but this is applicable to any programming language*
 
-```
+```javascript
 const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
@@ -64,20 +66,28 @@ app.post('/myEvent', (req, res) => {
 app.listen(port, () => console.log(`Kafka consumer app listening on port ${port}!`))
 ```
 
-#### ACK-ing an event
+### ACK-ing an event
 
 In order to tell Dapr that you successfully processed an event in your application, return a `200 OK` response from your HTTP handler.
 
-```
+```javascript
 res.status(200).send()
 ```
-#### Rejecting an event
+
+### Rejecting an event
 
 In order to tell Dapr that the event wasn't processed correctly in your application and schedule it for redelivery, return any response different from `200 OK`. For example, a `500 Error`.
 
-```
+```javascript
 res.status(500).send()
 ```
 
 ### Event delivery Guarantees
 Event delivery guarantees are controlled by the binding implementation. Depending on the binding implementation, the event delivery can be exactly once or at least once.
+
+
+## References
+
+* Binding [API](https://github.com/dapr/docs/blob/master/reference/api/bindings_api.md)
+* Binding [Components](https://github.com/dapr/docs/tree/master/concepts/bindings)
+* Binding [Detailed specifications](https://github.com/dapr/docs/tree/master/reference/specs/bindings)

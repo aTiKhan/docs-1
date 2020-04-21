@@ -16,7 +16,7 @@ The easiest way to install etcd on Kubernetes is by using the [Helm chart](https
 
 ```
 helm repo add incubator http://storage.googleapis.com/kubernetes-charts-incubator
-helm install --name etcd incubator/etcd
+helm install etcd incubator/etcd
 ```
 
 This will install etcd into the `default` namespace.
@@ -48,7 +48,7 @@ spec:
     value: <REPLACE-WITH-OPERATION-TIMEOUT> # Optional. default: "10S"
 ```
 
-The above example uses secrets as plain strings. It is recommended to use a secret store for the secrets as described [here](../../concepts/components/secrets.md)
+The above example uses secrets as plain strings. It is recommended to use a secret store for the secrets as described [here](../../concepts/secrets/README.md)
 
 
 ## Apply the configuration

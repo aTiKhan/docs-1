@@ -8,18 +8,21 @@ In many environments with multiple services that need to communicate with each o
 
 Dapr allows developers to overcome these challenges by providing an endpoint that acts as a combination of a reverse proxy with built-in service discovery, while leveraging built-in distributed tracing and error handling.
 
-For more info on service invocation, read the [conceptional documentation](../../concepts/service-invocation/service-invocation.md).
+For more info on service invocation, read the [conceptional documentation](../../concepts/service-invocation/README.md).
 
 ## 1. Choose an ID for your service
 
-Dapr allows you to assign a global, unique ID for your app.<br>
+Dapr allows you to assign a global, unique ID for your app.
+
 This ID encapsulates the state for your application, regardless of the number of instances it may have.
 
 ### Setup an ID using the Dapr CLI
 
 In Standalone mode, set the `--app-id` flag:
 
-`dapr run --app-id cart --app-port 5000 python app.py`
+```bash
+dapr run --app-id cart --app-port 5000 python app.py
+```
 
 ### Setup an ID using Kubernetes
 
@@ -72,26 +75,25 @@ This Python app exposes an `add()` method via the `/add` endpoint.
 
 ### Invoke with curl
 
-```
+```bash
 curl http://localhost:3500/v1.0/invoke/cart/method/add -X POST
 ```
 
-Since the aoo endpoint is a 'POST' method, we used `-X POST` in the curl command.
+Since the add endpoint is a 'POST' method, we used `-X POST` in the curl command.
 
 To invoke a 'GET' endpoint:
 
-```
+```bash
 curl http://localhost:3500/v1.0/invoke/cart/method/add
 ```
 
 To invoke a 'DELETE' endpoint:
 
-```
+```bash
 curl http://localhost:3500/v1.0/invoke/cart/method/add -X DELETE
 ```
 
 Dapr puts any payload return by their called service in the HTTP response's body.
-
 
 ## Overview
 
@@ -99,3 +101,7 @@ The example above showed you how to directly invoke a different service running 
 Dapr outputs metrics and tracing information allowing you to visualize a call graph between services, log errors and optionally log the payload body.
 
 For more information on tracing, visit [this link](../../best-practices/troubleshooting/tracing.md).
+
+ ## Related Topics
+*  [Service invocation concepts](../../concepts/service-invocation/README.md)
+* [Service invocation API specification](../../reference/api/service_invocation_api.md)

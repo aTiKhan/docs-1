@@ -15,7 +15,8 @@ You can then interact with the server using `localhost:9042`.
 The easiest way to install Cassandra on Kubernetes is by using the [Helm chart](https://github.com/helm/charts/tree/master/incubator/cassandra):
 
 ```
-helm install --namespace "cassandra" -n "cassandra" incubator/cassandra
+kubectl create namespace cassandra
+helm install cassandra incubator/cassandra --namespace cassandra
 ```
 
 This will install Cassandra into the `cassandra` namespace by default.
@@ -57,7 +58,7 @@ spec:
     value: <REPLACE-WITH-REPLICATION-FACTOR> #  Optional. default: "1"
 ```
 
-The above example uses secrets as plain strings. It is recommended to use a secret store for the secrets as described [here](../../concepts/components/secrets.md)
+The above example uses secrets as plain strings. It is recommended to use a secret store for the secrets as described [here](../../concepts/secrets/README.md)
 
 The following example uses the Kubernetes secret store to retrieve the username and password:
 
